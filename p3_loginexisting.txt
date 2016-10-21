@@ -1,0 +1,115 @@
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.*;
+import java.sql.*;
+import java.util.*;
+import javax.imageio.ImageIO;
+
+public class loginexisting extends JFrame implements ActionListener{
+    
+    JLabel l1=new JLabel("Customer Id");
+    JLabel l2=new JLabel("Email");
+    JTextField zx=new JTextField("");
+    JTextField xc=new JTextField(" ");
+    JButton b1=new JButton("Login");
+    JButton b2=new JButton("Back");
+    Statement st,sq;
+    ResultSet rs,ps;
+    Connection cont,con;
+    int maxvalue=999;
+    Random random = new Random();
+    int pick = random.nextInt(maxvalue);
+    JLabel l3=new JLabel(" Existing User");
+    
+    
+ loginexisting(){
+    this.setVisible(true);
+    this.setLayout(null);
+    setTitle("Customer Login");
+    setSize(1000,800);
+   // this.setBackground(Color.yellow);
+    
+    try {
+    		this.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("C:\\Users\\Nishant\\Documents\\as.jpg")))));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    this.setVisible(true);
+    Font font1 = new Font("SansSerif", Font.BOLD, 20);
+     Font font2 = new Font("SansSerif", Font.BOLD, 30);
+    l3.setBounds(320,60,400,50);add(l3); l3.setFont(font2);
+    l1.setBounds(250,160,200,50);add(l1); l1.setFont(font1);
+    l2.setBounds(250,250,200,50);add(l2);l2.setFont(font1);
+    zx.setBounds(520,160,200,50);add(zx);
+    xc.setBounds(520,250,200,50);add(xc);
+    b1.setBounds(250,450,200,50);add(b1);
+    b2.setBounds(520,450,200,50);add(b2);   
+    b1.addActionListener(this);
+    b2.addActionListener(this);
+    l1.setForeground(Color.black);
+    l2.setForeground(Color.black);
+    l3.setForeground(Color.red);
+    try{       
+               DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+               Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","nish1234");
+               st=con.createStatement();
+    }
+    catch(Exception ex)
+    {
+     JOptionPane.showMessageDialog(null,ex);
+    }  
+    
+     }  
+ public static void main(String[] args)
+    {
+         new loginexisting();
+              }
+    
+    
+    
+    
+    public void actionPerformed(ActionEvent e) {
+       if(e.getSource()==b1)
+        {
+             try{   
+                  DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                 cont=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","nish1234");
+                  st=cont.createStatement();
+              
+                    String query = "select cust_id,email from customer  where cust_id='"+zx.getText()+"'and email='"+xc.getText()+"'";  
+                    rs=st.executeQuery(query);
+             if(rs.next() )
+          { 
+          JOptionPane.showMessageDialog(null," Welcome " +"' "+zx.getText()+" !!'");
+             String as=rs.getString(1);
+            dispose();
+             new cpage(as); 
+          
+            } 
+          
+        else
+      {      JOptionPane.showMessageDialog(null," User Does Not Exist ");
+              zx.setText("");
+              xc.setText("");  
+      }  
+        }       
+            catch(Exception ex)
+              { JOptionPane.showMessageDialog(null," Invalid  ");
+              zx.setText("");
+              xc.setText("");
+              }
+           
+             } 
+            
+       
+       if(e.getSource()==b2)
+       {new login();
+       dispose();
+       }
+         }
+    
+}

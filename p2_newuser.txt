@@ -1,0 +1,121 @@
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+
+public class newuser extends JFrame implements ActionListener{
+   
+    Statement st;
+    ResultSet rs;
+    Connection con;
+JLabel l1=new JLabel("Customer Name");
+JLabel l2=new JLabel("PhoneNo");
+JLabel l3=new JLabel("Email");
+JLabel l4=new JLabel("Address");
+JLabel l5=new JLabel("Unique ID");
+JTextField t1=new JTextField();
+JTextField t2=new JTextField();
+JTextField t3=new JTextField();
+JTextField t4=new JTextField();
+JTextField t5=new JTextField();
+JButton b1=new JButton("Create User");
+JButton b2=new JButton("Back");
+JLabel l6=new JLabel (" New user ");
+
+ newuser(){
+    this.setLayout(null);
+    setSize(1000,700);
+    this.setVisible(true);
+     this.setBackground(Color.yellow);
+  /*   try {
+    		this.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("C:\\Users\\Nishant\\Documents\\sd.jpg")))));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    */
+    l5.setBounds(150,100,100,40);add(l5);
+    l1.setBounds(150,170,250,40);add(l1);
+    l2.setBounds(150,240,100,40);add(l2);
+    l3.setBounds(150,310,100,40);add(l3);
+    l4.setBounds(150,380,100,40);add(l4);    
+    b1.setBounds(170,480,150,40);add(b1);
+    b2.setBounds(420,480,150,40);add(b2);
+    t5.setBounds(420,100,200,40);add(t5);
+    t1.setBounds(420,170,200,40);add(t1);
+    t2.setBounds(420,240,200,40);add(t2);
+    t3.setBounds(420,310,200,40);add(t3);
+    t4.setBounds(420,380,200,60);add(t4); 
+    b1.addActionListener(this);
+    l6.setBounds(280,30,200,40); this.add(l6);
+    l6.setForeground(Color.blue);
+    l6.setFont(new Font("Serif", Font.BOLD, 40));
+    l1.setVisible(true);
+    l2.setVisible(true);
+    l3.setVisible(true);
+    l4.setVisible(true);
+    l5.setVisible(true);
+    t5.setVisible(true);
+    t1.setVisible(true);
+    t2.setVisible(true);
+    t3.setVisible(true);
+    t4.setVisible(true);
+    b1.setVisible(true);
+    b2.setVisible(true);
+    b2.addActionListener(this);
+    
+
+ 
+ }
+
+public static void main(String[] args){
+new newuser();
+
+}
+
+   
+    public void actionPerformed(ActionEvent e) {
+   if(e.getSource()==b1)
+   {
+    try{
+        
+        
+                 DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                 Connection cont=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","system","nish1234");
+        st=cont.createStatement();
+              
+        String query = "insert into customer values('"+t5.getText()+"','"+t1.getText()+"','"+t2.getText()+"','"+t3.getText()+"','"+t4.getText()+"')"; 
+      st.executeUpdate(query);
+        
+       
+          
+          
+          JOptionPane.showMessageDialog(null,"Your Account Created");
+  dispose();
+          new loginexisting();
+      
+       
+    }
+    catch( Exception ew)
+            {
+     JOptionPane.showMessageDialog(null,"Can't Create Your Account");
+     t1.setText("");   t2.setText("");   t3.setText("");   t4.setText("");   t5.setText("");
+    }   
+       
+   }
+   
+      if(e.getSource()==b2)
+   {
+       new login();
+       dispose();
+   }}
+
+
+
+
+}

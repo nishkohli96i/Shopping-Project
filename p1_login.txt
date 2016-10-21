@@ -1,0 +1,53 @@
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+
+public class login extends JFrame implements ActionListener {
+
+    JButton b1=new JButton(" New User ");
+    JButton b2=new JButton(" Existing User ");
+    
+ 
+    login()
+    {
+    this.setVisible(true);
+    this.setLayout(null);
+    this.setSize(1000,700);
+    
+  try {
+    		this.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("C:\\Users\\Nishant\\Documents\\flipkartlight.jpg")))));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    this.add(b1);
+    this.add(b2);
+    b1.setBounds(250,500,200,40);
+    b2.setBounds(500,500,200,40);
+    b1.addActionListener(this);
+    b2.addActionListener(this);
+    
+     }
+    public static void main(String args [])
+    { new login();  }
+   
+    public void actionPerformed(ActionEvent e) {
+        
+        if(e.getSource()==b1)
+        {  dispose();
+            new newuser();
+        
+        }
+        if(e.getSource()==b2)
+        {
+            dispose();
+            new loginexisting();
+        
+         }
+    }
+    
+}
